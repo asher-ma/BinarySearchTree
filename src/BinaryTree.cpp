@@ -64,13 +64,16 @@ int BinaryTree<ItemType>::getNumberOfNodesHelper(BinaryNode<ItemType>* subTreePt
     }
 }
 
-// Pure virtual method placeholders (to avoid compilation errors):
-
 // Gets item stored in node
 template <typename ItemType>
 ItemType BinaryTree<ItemType>::getRootData() const {
     return this->rootPtr->getItem();
 }
+
+// Pure virtual method placeholders (to avoid compilation errors):
+// TODO: Implement these
+
+
 
 template <typename ItemType>
 void BinaryTree<ItemType>::setRootData( const ItemType& newData) {}
