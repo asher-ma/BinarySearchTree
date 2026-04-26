@@ -70,14 +70,14 @@ ItemType BinaryTree<ItemType>::getRootData() const {
     return this->rootPtr->getItem();
 }
 
+// Sets node item to provided data
+template <typename ItemType>
+void BinaryTree<ItemType>::setRootData( const ItemType& newData) {
+    this->rootPtr->setItem(newData);
+}
+
 // Pure virtual method placeholders (to avoid compilation errors):
 // TODO: Implement these
-
-
-
-template <typename ItemType>
-void BinaryTree<ItemType>::setRootData( const ItemType& newData) {}
-
 template <typename ItemType>
 bool BinaryTree<ItemType>::add( const ItemType& newData) {
     return false;
