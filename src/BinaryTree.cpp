@@ -21,6 +21,7 @@ template <typename ItemType>
 BinaryTree<ItemType>::~BinaryTree() {}
 
 // Members
+// Returns true if tree is empty
 template <typename ItemType>
 bool BinaryTree<ItemType>::isEmpty() const {
     if (this->rootPtr == nullptr){
@@ -29,11 +30,13 @@ bool BinaryTree<ItemType>::isEmpty() const {
     return false;
 }
 
+// Returns height of tree
 template <typename ItemType>
 int BinaryTree<ItemType>::getHeight() const {
     return getHeightHelper(this->rootPtr);
 }
 
+// Finds height by recursing down each branch and returning length of longest path
 template <typename ItemType>
 int BinaryTree<ItemType>::getHeightHelper(BinaryNode<ItemType>* subTreePtr) const {
     if (subTreePtr == nullptr){
@@ -44,11 +47,24 @@ int BinaryTree<ItemType>::getHeightHelper(BinaryNode<ItemType>* subTreePtr) cons
     }
 }
 
-// Pure virtual method placeholders (to avoid compilation errors):
+// Returns number of nodes in tree
 template <typename ItemType>
 int BinaryTree<ItemType>::getNumberOfNodes() const {
-    return 0;
+    return getNumberOfNodesHelper(this->rootPtr);
 }
+
+// Finds number of nodes by recursing down each branch and summing length of each path
+template <typename ItemType>
+int BinaryTree<ItemType>::getNumberOfNodesHelper(BinaryNode<ItemType>* subTreePtr) const {
+    if (subTreePtr == nullptr){
+        return 0;
+    } else {
+        return 1+getNumberOfNodesHelper(subTreePtr->getRightChildPtr()) +
+            getNumberOfNodesHelper(subTreePtr->getLeftChildPtr());
+    }
+}
+
+// Pure virtual method placeholders (to avoid compilation errors):
 
 // Gets item stored in node
 template <typename ItemType>
