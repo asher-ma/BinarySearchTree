@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class NotFoundExcep : public exception {
+class NotFoundExcep : public runtime_error {
     public :
         NotFoundExcep(const string& message = "");
 }; // end NotFoundExcep
