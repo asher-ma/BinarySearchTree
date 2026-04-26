@@ -21,4 +21,6 @@ class BinaryNode{
         void setRightChildPtr(BinaryNode<ItemType>* rightPtr);
 }; // end BinaryNode
 
+#include "../src/BinaryNode.cpp"
+
 #endif

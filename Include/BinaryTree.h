@@ -56,4 +56,6 @@ class BinaryTree : public BinaryTreeAbstract<ItemType>{
         BinaryTree& operator=(const BinaryTree& rightHandSide);
 }; // end BinaryTree
 
+#include "../src/BinaryTree.cpp"
+
 #endif

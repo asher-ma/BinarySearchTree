@@ -7,7 +7,7 @@ BinaryTree<ItemType>::BinaryTree(){}
 
 template <typename ItemType>
 BinaryTree<ItemType>::BinaryTree(const ItemType& rootItem) {
-    rootPtr = new BinaryNode<ItemType>(rootItem);
+    this->rootPtr = new BinaryNode<ItemType>(rootItem);
 }
 
 // BinaryTree(const ItemType& rootItem,
@@ -16,11 +16,14 @@ BinaryTree<ItemType>::BinaryTree(const ItemType& rootItem) {
 
 // BinaryTree(const BinaryNodeTree<ItemType>& tree);
 
+// Destructor
+template <typename ItemType>
+BinaryTree<ItemType>::~BinaryTree() {}
 
 // Members
 template <typename ItemType>
 bool BinaryTree<ItemType>::isEmpty() const {
-    if (rootPtr == nullptr){
+    if (this->rootPtr == nullptr){
         return true;
     }
     return false;
@@ -28,15 +31,64 @@ bool BinaryTree<ItemType>::isEmpty() const {
 
 template <typename ItemType>
 int BinaryTree<ItemType>::getHeight() const {
-    return getHeightHelper(rootPtr);
+    return getHeightHelper(this->rootPtr);
 }
 
 template <typename ItemType>
 int BinaryTree<ItemType>::getHeightHelper(BinaryNode<ItemType>* subTreePtr) const {
-    if (!subTreePtr.isEmpty()){
+    if (subTreePtr == nullptr){
         return 0;
     } else {
-        return max(1+getHeightHelper(subTreePtr->rightChildPtr),
-            1+getHeightHelper(subTreePtr->leftChildPtr));
+        return max(1+getHeightHelper(subTreePtr->getRightChildPtr()),
+            1+getHeightHelper(subTreePtr->getLeftChildPtr()));
     }
 }
+
+// Pure virtual method placeholders (to avoid compilation errors):
+template <typename ItemType>
+int BinaryTree<ItemType>::getNumberOfNodes() const {
+    return 0;
+}
+
+// Gets item stored in node
+template <typename ItemType>
+ItemType BinaryTree<ItemType>::getRootData() const {
+    return this->rootPtr->getItem();
+}
+
+template <typename ItemType>
+void BinaryTree<ItemType>::setRootData( const ItemType& newData) {}
+
+template <typename ItemType>
+bool BinaryTree<ItemType>::add( const ItemType& newData) {
+    return false;
+}
+
+template <typename ItemType>
+bool BinaryTree<ItemType>::remove( const ItemType& data) {
+    return false;
+}
+
+template <typename ItemType>
+void BinaryTree<ItemType>::clear() {}
+
+//TODO: search tree - find node with value - return value
+template <typename ItemType>
+ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
+    return anEntry;
+}
+
+template <typename ItemType>
+bool BinaryTree<ItemType>::contains( const ItemType& anEntry) const {
+    return false;
+}
+
+// Traversals
+template <typename ItemType>
+void BinaryTree<ItemType>::preorderTraverse( void visit(ItemType&)) const {}
+
+template <typename ItemType>
+void BinaryTree<ItemType>::inorderTraverse( void visit(ItemType&)) const {}
+
+template <typename ItemType>
+void BinaryTree<ItemType>::postorderTraverse( void visit(ItemType&)) const {}
