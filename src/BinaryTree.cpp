@@ -1,5 +1,5 @@
+#include "BinaryTreeAbstract.h"
 #include "BinaryTree.h"
-
 
 // Constructors
 template <typename ItemType>
@@ -19,7 +19,7 @@ BinaryTree<ItemType>::BinaryTree(const ItemType& rootItem) {
 
 // Members
 template <typename ItemType>
-bool isEmpty(){
+bool BinaryTree<ItemType>::isEmpty() const {
     if (rootPtr == nullptr){
         return true;
     }
@@ -27,12 +27,12 @@ bool isEmpty(){
 }
 
 template <typename ItemType>
-int getHeight(){
+int BinaryTree<ItemType>::getHeight() const {
     return getHeightHelper(rootPtr);
 }
 
 template <typename ItemType>
-int getHeightHelper(BinaryNode<ItemType>* subTreePtr) {
+int BinaryTree<ItemType>::getHeightHelper(BinaryNode<ItemType>* subTreePtr) const {
     if (!subTreePtr.isEmpty()){
         return 0;
     } else {

@@ -6,7 +6,6 @@
 #include "PrecondViolatedException.h"
 #include "NotFoundException.h"
 
-
 template < class ItemType>
 class BinaryTree : public BinaryTreeAbstract<ItemType>{
 
