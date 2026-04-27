@@ -74,7 +74,11 @@ ItemType BinaryTree<ItemType>::getRootData() const {
 // Sets item stored in node
 template <typename ItemType>
 void BinaryTree<ItemType>::setRootData( const ItemType& newData) {
-    this->rootPtr->setItem(newData);
+    if (this->rootPtr->getItem() == nullptr) {
+        this->rootPtr = new BinaryNode<ItemType>(newdata);
+    } else {
+        this->rootPtr->setItem(newData);
+    }
 }
 
 // Pure virtual method placeholders (to avoid compilation errors):
@@ -92,7 +96,7 @@ bool BinaryTree<ItemType>::remove( const ItemType& data) {
 template <typename ItemType>
 void BinaryTree<ItemType>::clear() {}
 
-//TODO: search tree - find node with value - return value
+// Finds and returns searched value if found in tree
 template <typename ItemType>
 ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
     BinaryNode<ItemType>* current = this->rootPtr;
