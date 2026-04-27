@@ -1,5 +1,6 @@
 #include "BinaryTreeAbstract.h"
 #include "BinaryTree.h"
+#include "NotFoundException.h"
 
 // Constructors
 template <typename ItemType>
@@ -94,9 +95,21 @@ void BinaryTree<ItemType>::clear() {}
 //TODO: search tree - find node with value - return value
 template <typename ItemType>
 ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
-    return anEntry;
+    BinaryNode<ItemType>* current = this->rootPtr;
+
+    while (current != nullptr) {
+        if (anEntry == current->getItem()) {
+            return current->getItem();
+        } else if (anEntry < current->getItem()){
+            current = current->getLeftChildPtr();
+        } else {
+            current = current->getRightChildPtr();
+        }
+    }
+    throw NotFoundExcep("Entry not found in tree");
 }
 
+// Returns true if tree contains searched entry, otherwise false
 template <typename ItemType>
 bool BinaryTree<ItemType>::contains( const ItemType& anEntry) const {
     BinaryNode<ItemType>* current = this->rootPtr;
