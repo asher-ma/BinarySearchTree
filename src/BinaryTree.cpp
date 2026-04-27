@@ -64,16 +64,19 @@ int BinaryTree<ItemType>::getNumberOfNodesHelper(BinaryNode<ItemType>* subTreePt
     }
 }
 
-// Pure virtual method placeholders (to avoid compilation errors):
-
 // Gets item stored in node
 template <typename ItemType>
 ItemType BinaryTree<ItemType>::getRootData() const {
     return this->rootPtr->getItem();
 }
 
+// Sets item stored in node
 template <typename ItemType>
-void BinaryTree<ItemType>::setRootData( const ItemType& newData) {}
+void BinaryTree<ItemType>::setRootData( const ItemType& newData) {
+    this->rootPtr->setItem(newData);
+}
+
+// Pure virtual method placeholders (to avoid compilation errors):
 
 template <typename ItemType>
 bool BinaryTree<ItemType>::add( const ItemType& newData) {
@@ -96,6 +99,17 @@ ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
 
 template <typename ItemType>
 bool BinaryTree<ItemType>::contains( const ItemType& anEntry) const {
+    BinaryNode<ItemType>* current = this->rootPtr;
+
+    while (current != nullptr) {
+        if (anEntry == current->getItem()) {
+            return true;
+        } else if (anEntry < current->getItem()){
+            current = current->getLeftChildPtr();
+        } else {
+            current = current->getRightChildPtr();
+        }
+    }
     return false;
 }
 
