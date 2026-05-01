@@ -186,15 +186,32 @@ void BinaryTree<ItemType>::preorder(void visit(ItemType&), BinaryNode<ItemType>*
 
 // inorder: left, root, right
 template <typename ItemType>
-void BinaryTree<ItemType>::inorderTraverse( void visit(ItemType&)) const {}
+void BinaryTree<ItemType>::inorderTraverse( void visit(ItemType&)) const {
+    inorder(visit, this->rootPtr);
+}
 
-// template<typename ItemType>
-// void BinaryTree<ItemType>::inorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const ;
-
+template<typename ItemType>
+void BinaryTree<ItemType>::inorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const {
+    if (treePtr != nullptr) {
+        preorder(visit, treePtr->getLeftChildPtr());
+        ItemType item = treePtr->getItem();
+        visit(item);
+        preorder(visit, treePtr->getRightChildPtr());
+    }
+}
 
 // postorder: left, right, root
 template <typename ItemType>
-void BinaryTree<ItemType>::postorderTraverse( void visit(ItemType&)) const {}
+void BinaryTree<ItemType>::postorderTraverse( void visit(ItemType&)) const {
+    postorder(visit, this->rootPtr);
+}
 
-// template<typename ItemType>
-// void BinaryTree<ItemType>::postorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const ;
+template<typename ItemType>
+void BinaryTree<ItemType>::postorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const {
+    if (treePtr != nullptr) {
+        preorder(visit, treePtr->getLeftChildPtr());
+        preorder(visit, treePtr->getRightChildPtr());
+        ItemType item = treePtr->getItem();
+        visit(item);
+    }
+}
