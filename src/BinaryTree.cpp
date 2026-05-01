@@ -85,7 +85,35 @@ void BinaryTree<ItemType>::setRootData( const ItemType& newData) {
 
 template <typename ItemType>
 bool BinaryTree<ItemType>::add( const ItemType& newData) {
-    return false;
+    if (this->isEmpty()) {   // Case for if tree is empty
+        this->rootPtr = new BinaryNode<ItemType>(newData);
+        return true;
+    } else {
+        balancedAdd(this->rootPtr, new BinaryNode<ItemType>(newData));
+        return true;
+    }
+}
+
+template <typename ItemType>
+BinaryNode<ItemType>* BinaryTree<ItemType>::balancedAdd(BinaryNode<ItemType>* subTreePtr,
+        BinaryNode<ItemType>* newNodePtr) {
+    BinaryNode<ItemType>* leftChildPtr = subTreePtr->getLeftChildPtr();
+    BinaryNode<ItemType>* rightChildPtr = subTreePtr->getRightChildPtr();
+        
+    if (leftChildPtr == nullptr) { 
+        subTreePtr->setLeftChildPtr(newNodePtr);
+        return subTreePtr;
+    } else if (rightChildPtr == nullptr) {
+        subTreePtr->setRightChildPtr(newNodePtr);
+        return subTreePtr;
+    }
+
+    // If current node has two children traverse down the shorter path
+    if (getHeightHelper(leftChildPtr) <= getHeightHelper(rightChildPtr)) {
+        return balancedAdd(leftChildPtr, newNodePtr);
+    } else {
+        return balancedAdd(rightChildPtr, newNodePtr);
+    }
 }
 
 template <typename ItemType>
