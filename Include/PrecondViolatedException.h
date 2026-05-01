@@ -1,5 +1,5 @@
 #ifndef _PRECOND_VIOLATED_EXCEP_H_
-#define _PRECOND_VIOLATED_EXCEP_H
+#define _PRECOND_VIOLATED_EXCEP_H_
 
 #include <stdexcept>
 #include <string>

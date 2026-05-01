@@ -71,11 +71,11 @@ ItemType BinaryTree<ItemType>::getRootData() const {
     return this->rootPtr->getItem();
 }
 
-// Sets item stored in node
+// Sets item stored in root node
 template <typename ItemType>
 void BinaryTree<ItemType>::setRootData( const ItemType& newData) {
-    if (this->rootPtr->getItem() == nullptr) {
-        this->rootPtr = new BinaryNode<ItemType>(newdata);
+    if (this->rootPtr == nullptr) {
+        this->rootPtr = new BinaryNode<ItemType>(newData);
     } else {
         this->rootPtr->setItem(newData);
     }
@@ -96,6 +96,8 @@ bool BinaryTree<ItemType>::remove( const ItemType& data) {
 template <typename ItemType>
 void BinaryTree<ItemType>::clear() {}
 
+// ERR: This is getEntry() for a BST not a general binary tree
+//      The general binary tree getEntry() must check every node
 // Finds and returns searched value if found in tree
 template <typename ItemType>
 ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
@@ -113,6 +115,8 @@ ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
     throw NotFoundExcep("Entry not found in tree");
 }
 
+// ERR: This is contains() for a BST not a general binary tree
+//      The general binary tree contains() must check every node
 // Returns true if tree contains searched entry, otherwise false
 template <typename ItemType>
 bool BinaryTree<ItemType>::contains( const ItemType& anEntry) const {
