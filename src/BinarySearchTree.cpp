@@ -108,62 +108,17 @@ bool BinarySearchTree<ItemType>::remove( const ItemType& anEntry) {
 template <typename ItemType>
 void BinarySearchTree<ItemType>::setRootData( const ItemType& newData) const {}
 
-/*
-// ERR: This is getEntry() for a BST not a general binary tree
-//      The general binary tree getEntry() must check every node
-// Finds and returns searched value if found in tree
+// Reimplemented to use new findNode()
 template <typename ItemType>
-ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
-    BinaryNode<ItemType>* current = this->rootPtr;
-
-    while (current != nullptr) {
-        if (anEntry == current->getItem()) {
-            return current->getItem();
-        } else if (anEntry < current->getItem()){
-            current = current->getLeftChildPtr();
-        } else {
-            current = current->getRightChildPtr();
-        }
-    }
-    throw NotFoundExcep("Entry not found in tree");
-}
-
-// ERR: This is contains() for a BST not a general binary tree
-//      The general binary tree contains() must check every node
-// Returns true if tree contains searched entry, otherwise false
-template <typename ItemType>
-bool BinaryTree<ItemType>::contains( const ItemType& anEntry) const {
-    BinaryNode<ItemType>* current = this->rootPtr;
-
-    while (current != nullptr) {
-        if (anEntry == current->getItem()) {
-            return true;
-        } else if (anEntry < current->getItem()){
-            current = current->getLeftChildPtr();
-        } else {
-            current = current->getRightChildPtr();
-        }
-    }
-    return false;
+bool BinarySearchTree<ItemType>::contains(const ItemType& anEntry) const {
+    return findNode(this->rootPtr, anEntry) != nullptr;
 }
 
 template <typename ItemType>
-BinaryNode<ItemType>* BinaryTree<ItemType>::moveValuesUpTree(BinaryNode<ItemType>* subTreePtr) {
-    if (subTreePtr->isLeaf()){
-        delete subTreePtr;
-        subTreePtr = nullPtr;
-        return subTreePtr;
+ItemType BinarySearchTree<ItemType>::getEntry(const ItemType& anEntry) const {
+    BinaryNode<ItemType>* node = findNode(this->rootPtr, anEntry);
+    if (node == nullptr) {
+        throw NotFoundException("Entry not found in tree");
     }
-    BinaryNode<ItemType>* leftChildPtr = subTreePtr->getLeftChildPtr();
-    BinaryNode<ItemType>* rightChildPtr = subTreePtr->getRightChildPtr();
-    if (leftChildPtr != nullptr && rightChildPtr == nullptr) { // Subtree only has left child
-        nodeToConnectPtr = leftChildPtr;
-    } else if (leftChildPtr == nullptr && rightChildPtr != nullptr) { // Subtree only has right child
-        nodeToConnectPtr = rightChildPtr;
-    } else {    // Subtree has two children
-        BinaryNode<ItemType>* tempPtr = remove
-    }
-
+    return node->getItem();
 }
-
-*/
