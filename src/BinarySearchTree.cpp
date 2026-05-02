@@ -121,7 +121,9 @@ bool BinarySearchTree<ItemType>::remove( const ItemType& anEntry) {
 }
 
 template <typename ItemType>
-void BinarySearchTree<ItemType>::setRootData( const ItemType& newData) const {}
+void BinarySearchTree<ItemType>::setRootData(const ItemType& newData) const {
+    throw PrecondViolatedExcep("Cannot set root data on a BST");
+}
 
 
 // Reimplemented to use BST findNode()
