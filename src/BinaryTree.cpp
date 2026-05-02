@@ -323,3 +323,13 @@ template <typename ItemType>
 void BinaryTree<ItemType>::postorderTraverse( void visit(ItemType&)) const {
     postorder(visit, this->rootPtr);
 }
+
+// Replacing its current contents with copy of given tree
+template <typename ItemType>
+BinaryTree<ItemType>& BinaryTree<ItemType>::operator=(const BinaryTree<ItemType>& rightHandSide) {
+    if (this != &rightHandSide) {       // Guard against self-assignment
+        clear();
+        this->rootPtr = copyTree(rightHandSide.rootPtr);
+    }
+    return *this;
+}
