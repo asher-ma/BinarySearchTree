@@ -21,7 +21,7 @@ class BinaryTree : public BinaryTreeAbstract<ItemType>{
         const ItemType target, bool& success);
         BinaryNode<ItemType>* moveValuesUpTree(BinaryNode<ItemType>* subTreePtr);
 
-        BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr, const ItemType& target, bool& success) const ;
+        BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr, const ItemType& target) const ;
         BinaryNode<ItemType>* copyTree(const BinaryNode<ItemType>* treePtr) const ;
         
         void preorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const ;

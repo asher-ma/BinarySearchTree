@@ -1,5 +1,6 @@
 #include "BinaryTreeAbstract.h"
 #include "BinaryTree.h"
+#include "NotFoundException.h"
 
 // Constructors
 template <typename ItemType>
@@ -80,7 +81,35 @@ void BinaryTree<ItemType>::setRootData( const ItemType& newData) {
 // TODO: Implement these
 template <typename ItemType>
 bool BinaryTree<ItemType>::add( const ItemType& newData) {
-    return false;
+    if (this->isEmpty()) {   // Case for if tree is empty
+        this->rootPtr = new BinaryNode<ItemType>(newData);
+        return true;
+    } else {
+        balancedAdd(this->rootPtr, new BinaryNode<ItemType>(newData));
+        return true;
+    }
+}
+
+template <typename ItemType>
+BinaryNode<ItemType>* BinaryTree<ItemType>::balancedAdd(BinaryNode<ItemType>* subTreePtr,
+        BinaryNode<ItemType>* newNodePtr) {
+    BinaryNode<ItemType>* leftChildPtr = subTreePtr->getLeftChildPtr();
+    BinaryNode<ItemType>* rightChildPtr = subTreePtr->getRightChildPtr();
+        
+    if (leftChildPtr == nullptr) { 
+        subTreePtr->setLeftChildPtr(newNodePtr);
+        return subTreePtr;
+    } else if (rightChildPtr == nullptr) {
+        subTreePtr->setRightChildPtr(newNodePtr);
+        return subTreePtr;
+    }
+
+    // If current node has two children traverse down the shorter path
+    if (getHeightHelper(leftChildPtr) <= getHeightHelper(rightChildPtr)) {
+        return balancedAdd(leftChildPtr, newNodePtr);
+    } else {
+        return balancedAdd(rightChildPtr, newNodePtr);
+    }
 }
 
 template <typename ItemType>
@@ -91,23 +120,114 @@ bool BinaryTree<ItemType>::remove( const ItemType& data) {
 template <typename ItemType>
 void BinaryTree<ItemType>::clear() {}
 
-//TODO: search tree - find node with value - return value
+// Traverse down through tree until target is found
+template <typename ItemType>
+BinaryNode<ItemType>* BinaryTree<ItemType>::findNode(BinaryNode<ItemType>* treePtr, const ItemType& target) const {
+    if (treePtr == nullptr) {
+        return nullptr;
+    }
+    if (treePtr->getItem() == target) {
+        return treePtr;
+    }
+    if (treePtr->getLeftChildPtr() != nullptr) {
+        BinaryNode<ItemType>* node = findNode(treePtr->getLeftChildPtr(), target);
+        if (node != nullptr) {
+            return node;
+        }
+    }
+    if (treePtr->getRightChildPtr() != nullptr) {
+        BinaryNode<ItemType>* node = findNode(treePtr->getRightChildPtr(), target);
+        if (node != nullptr) {
+            return node;
+        }
+    }
+    return nullptr;
+}
+
+
+// ERR: This is getEntry() for a BST not a general binary tree
+//      The general binary tree getEntry() must check every node
+// Finds and returns searched value if found in tree
 template <typename ItemType>
 ItemType BinaryTree<ItemType>::getEntry( const ItemType& anEntry) const {
-    return anEntry;
+    BinaryNode<ItemType>* current = this->rootPtr;
+
+    while (current != nullptr) {
+        if (anEntry == current->getItem()) {
+            return current->getItem();
+        } else if (anEntry < current->getItem()){
+            current = current->getLeftChildPtr();
+        } else {
+            current = current->getRightChildPtr();
+        }
+    }
+    throw NotFoundExcep("Entry not found in tree");
 }
 
+// ERR: This is contains() for a BST not a general binary tree
+//      The general binary tree contains() must check every node
+// Returns true if tree contains searched entry, otherwise false
 template <typename ItemType>
 bool BinaryTree<ItemType>::contains( const ItemType& anEntry) const {
+    BinaryNode<ItemType>* current = this->rootPtr;
+
+    while (current != nullptr) {
+        if (anEntry == current->getItem()) {
+            return true;
+        } else if (anEntry < current->getItem()){
+            current = current->getLeftChildPtr();
+        } else {
+            current = current->getRightChildPtr();
+        }
+    }
     return false;
 }
-
 // Traversals
+// preorder: root, left, right
 template <typename ItemType>
-void BinaryTree<ItemType>::preorderTraverse( void visit(ItemType&)) const {}
+void BinaryTree<ItemType>::preorderTraverse( void visit(ItemType&)) const {
+    preorder(visit, this->rootPtr);
+}
 
-template <typename ItemType>
-void BinaryTree<ItemType>::inorderTraverse( void visit(ItemType&)) const {}
+template<typename ItemType>
+void BinaryTree<ItemType>::preorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const {
+    if (treePtr != nullptr) {
+        ItemType item = treePtr->getItem();
+        visit(item);
+        preorder(visit, treePtr->getLeftChildPtr());
+        preorder(visit, treePtr->getRightChildPtr());
+    }
+}
 
+
+// inorder: left, root, right
 template <typename ItemType>
-void BinaryTree<ItemType>::postorderTraverse( void visit(ItemType&)) const {}
+void BinaryTree<ItemType>::inorderTraverse( void visit(ItemType&)) const {
+    inorder(visit, this->rootPtr);
+}
+
+template<typename ItemType>
+void BinaryTree<ItemType>::inorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const {
+    if (treePtr != nullptr) {
+        preorder(visit, treePtr->getLeftChildPtr());
+        ItemType item = treePtr->getItem();
+        visit(item);
+        preorder(visit, treePtr->getRightChildPtr());
+    }
+}
+
+// postorder: left, right, root
+template <typename ItemType>
+void BinaryTree<ItemType>::postorderTraverse( void visit(ItemType&)) const {
+    postorder(visit, this->rootPtr);
+}
+
+template<typename ItemType>
+void BinaryTree<ItemType>::postorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const {
+    if (treePtr != nullptr) {
+        preorder(visit, treePtr->getLeftChildPtr());
+        preorder(visit, treePtr->getRightChildPtr());
+        ItemType item = treePtr->getItem();
+        visit(item);
+    }
+}
