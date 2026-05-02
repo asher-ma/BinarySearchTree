@@ -29,12 +29,12 @@ class BinarySearchTree : public BinaryTree<ItemType> {
         bool isEmpty() const ;
         int getHeight() const ;
         int getNumberOfNodes() const ;
-        ItemType getRootData() const throw (PrecondViolatedExcep);
-        void setRootData( const ItemType& newData) const throw (PrecondViolatedExcep);
+        ItemType getRootData() const ; // throw (PrecondViolatedExcep);
+        void setRootData( const ItemType& newData) const ; // throw (PrecondViolatedExcep);
         bool add( const ItemType& newEntry);
         bool remove( const ItemType& anEntry);
         void clear();
-        ItemType getEntry( const ItemType& anEntry) const throw (NotFoundException);
+        ItemType getEntry( const ItemType& anEntry) const ; // throw (NotFoundException);
         bool contains( const ItemType& anEntry) const ;
         
         void preorderTraverse(void visit(ItemType&)) const ;
@@ -43,5 +43,7 @@ class BinarySearchTree : public BinaryTree<ItemType> {
         
         BinarySearchTree<ItemType>& operator=(const BinarySearchTree<ItemType>& rightHandSide);
 }; // end BinarySearchTree
+
+#include "../src/BinarySearchTree.cpp"
 
 #endif
