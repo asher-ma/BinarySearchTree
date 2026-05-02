@@ -18,18 +18,19 @@ BinarySearchTree<ItemType>::~BinarySearchTree() {}
 
 
 // Protected member functions
+
 template <typename ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemType>* subTreePtr, BinaryNode<ItemType>* newNode) {
     if (subTreePtr == nullptr) {
         return newNode;
     }
+
     BinaryNode<ItemType>* tempPtr;
-    BinaryNode<ItemType>* newNodePtr;
     if (subTreePtr->getItem() > newNode->getItem()) {
-        tempPtr = insertInorder(subTreePtr->getLeftChildPtr(), newNodePtr);
+        tempPtr = insertInorder(subTreePtr->getLeftChildPtr(), newNode);
         subTreePtr->setLeftChildPtr(tempPtr);
     } else {
-        tempPtr = insertInorder(subTreePtr->getRightChildPtr(), newNodePtr);
+        tempPtr = insertInorder(subTreePtr->getRightChildPtr(), newNode);
         subTreePtr->setRightChildPtr(tempPtr);
     }
     return subTreePtr;
