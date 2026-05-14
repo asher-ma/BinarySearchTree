@@ -20,6 +20,9 @@ AvlTree<ItemType>::AvlTree(const AvlTree<ItemType>& tree) : BinarySearchTree<Ite
 
 template <typename ItemType>
 int AvlTree<ItemType>::getHeight(AvlNode<ItemType>* nodePtr) const {
+    if (nodePtr == nullptr) {
+        return 0;
+    }
     return nodePtr->getHeight();
 }
 
@@ -35,7 +38,19 @@ void AvlTree<ItemType>::updateHeight(AvlNode<ItemType>* nodePtr) {
 
 template <typename ItemType>
 int AvlTree<ItemType>::getBalanceFactor(AvlNode<ItemType>* nodePtr) const {
-    return nodePtr->getRightChildPtr()->getHeight() - nodePtr->getLeftChildPtr()->getHeight();
+    if (nodePtr == nullptr) {
+        return 0;
+    }
+    int rightHeight = 0;
+    int leftHeight = 0;
+    if (nodePtr->getRightChildPtr() != nullptr) {
+        rightHeight = nodePtr->getRightChildPtr()->getHeight();
+    }
+    if (nodePtr->getLeftChildPtr() != nullptr) {
+        leftHeight = nodePtr->getLeftChildPtr()->getHeight();
+    }
+
+    return rightHeight - leftHeight;
 }
 
 template <typename ItemType>
@@ -48,7 +63,7 @@ AvlNode<ItemType>* AvlTree<ItemType>::balance(AvlNode<ItemType>* nodePtr) {
             return rotateRight(nodePtr);
         }
     } else if (BF > 1) { // Right heavy
-        if (nodePtr->getRightChildPtr()->getBalanceFactor() <0) { // Right Left
+        if (nodePtr->getRightChildPtr()->getBalanceFactor() < 0) { // Right Left
             return rotateRightLeft(nodePtr);
         } else { // Right Right
             return rotateLeft(nodePtr);
@@ -103,7 +118,7 @@ AvlNode<ItemType>* AvlTree<ItemType>::rotateRightLeft(AvlNode<ItemType>* nodePtr
 // Overridden methods
 
 template <typename ItemType>
-BinaryNode<ItemType>* AvlTree<ItemType>::removeValue(BinaryNode<ItemType>* subTreePtr, const ItemType target, bool& success) {
+AvlNode<ItemType>* AvlTree<ItemType>::removeValue(AvlNode<ItemType>* subTreePtr, const ItemType target, bool& success) {
     if (subTreePtr == nullptr) { // reached leaf
         success = false;
         return nullptr;
@@ -133,7 +148,7 @@ BinaryNode<ItemType>* AvlTree<ItemType>::removeValue(BinaryNode<ItemType>* subTr
 }
 
 template <typename ItemType>
-BinaryNode<ItemType>* AvlTree<ItemType>::insertInorder(BinaryNode<ItemType>* subTreePtr, BinaryNode<ItemType>* newNode) {
+AvlNode<ItemType>* AvlTree<ItemType>::insertInorder(AvlNode<ItemType>* subTreePtr, AvlNode<ItemType>* newNode) {
     if (subTreePtr == nullptr) {
         return newNode;
     }
@@ -156,4 +171,11 @@ bool AvlTree<ItemType>::add(const ItemType& newEntry) {
     AvlNode<ItemType>* newNodePtr = new AvlNode<ItemType>(newEntry);
     this->rootPtr = insertInorder(this->rootPtr, newNodePtr);
     return true;
+}
+
+template <typename ItemType>
+bool AvlTree<ItemType>::remove( const ItemType& anEntry) {
+    bool success = false;
+    this->rootPtr = removeValue(this->rootPtr, anEntry, success);
+    return success;
 }
