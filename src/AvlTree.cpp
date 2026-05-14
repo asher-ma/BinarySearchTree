@@ -89,10 +89,16 @@ AvlNode<ItemType>* AvlTree<ItemType>::rotateRight(AvlNode<ItemType>* nodePtr) {
 }
 
 template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::rotateLeftRight(AvlNode<ItemType>* nodePtr) {}
+AvlNode<ItemType>* AvlTree<ItemType>::rotateLeftRight(AvlNode<ItemType>* nodePtr) {
+    nodePtr->setLeftChildPtr() = rotateLeft(nodePtr->getLeftChildPtr());
+    return rotateRight(nodePtr);
+}
 
 template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::rotateRightLeft(AvlNode<ItemType>* nodePtr) {}
+AvlNode<ItemType>* AvlTree<ItemType>::rotateRightLeft(AvlNode<ItemType>* nodePtr) {
+    nodePtr->setRightChildPtr() = rotateRight(nodePtr->getRightChildPtr());
+    return rotateLeft(nodePtr);
+}
 
 
 // Overridden methods
