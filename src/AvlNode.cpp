@@ -3,7 +3,7 @@
 
 // Constructors
 template <typename ItemType>
-AvlNode<ItemType>::AvlNode() {}
+AvlNode<ItemType>::AvlNode() : BinaryNode() {}
 
 template <typename ItemType>
 AvlNode<ItemType>::AvlNode(const ItemType& anItem) : BinaryNode(anItem),
