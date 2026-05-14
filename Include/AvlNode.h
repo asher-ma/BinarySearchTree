@@ -11,7 +11,7 @@ class AvlNode : public BinaryNode<ItemType>{
         AvlNode();
         AvlNode(const ItemType& anItem);
         AvlNode(const ItemType& anItem, AvlNode<ItemType>* leftPtr,
-        AvlNode<ItemType>* rightPtr);
+            AvlNode<ItemType>* rightPtr);
         void setHeight(int height);
         int getHeight() const ;
 };
