@@ -63,10 +63,30 @@ AvlNode<ItemType>* AvlTree<ItemType>::balance(AvlNode<ItemType>* nodePtr) {
 // Rotations
 
 template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::rotateLeft(AvlNode<ItemType>* nodePtr) {}
+AvlNode<ItemType>* AvlTree<ItemType>::rotateLeft(AvlNode<ItemType>* nodePtr) {
+    AvlNode<ItemType>* rightChild = nodePtr->getRightChildPtr();
+
+    nodePtr->setRightChildPtr(rightChild->getLeftChildPtr());
+    rightChild->setLeftChildPtr(nodePtr);
+    
+    nodePtr->updateHeight();
+    rightChild->updateHeight();
+
+    return rightChild;
+}
 
 template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::rotateRight(AvlNode<ItemType>* nodePtr) {}
+AvlNode<ItemType>* AvlTree<ItemType>::rotateRight(AvlNode<ItemType>* nodePtr) {
+    AvlNode<ItemType>* leftChild = nodePtr->getLeftChildPtr();
+
+    nodePtr->setLeftChildPtr(leftChild->getRightChildPtr());
+    leftChild->setRightChildPtr(nodePtr);
+    
+    nodePtr->updateHeight();
+    leftChild->updateHeight();
+
+    return leftChild;
+}
 
 template <typename ItemType>
 AvlNode<ItemType>* AvlTree<ItemType>::rotateLeftRight(AvlNode<ItemType>* nodePtr) {}
