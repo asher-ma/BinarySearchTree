@@ -11,9 +11,7 @@ template <typename ItemType>
 AvlTree<ItemType>::AvlTree(const ItemType& rootItem) : BinarySearchTree<ItemType>(rootItem) {}
 
 template <typename ItemType>
-AvlTree<ItemType>::AvlTree(const AvlTree<ItemType>& tree) : BinarySearchTree<ItemType>(tree) {
-    // TODO: Balance given tree
-}
+AvlTree<ItemType>::AvlTree(const AvlTree<ItemType>& tree) : BinarySearchTree<ItemType>(tree) {}
 
 
 // Private methods
