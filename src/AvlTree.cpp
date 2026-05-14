@@ -26,7 +26,7 @@ int AvlTree<ItemType>::getHeight(AvlNode<ItemType>* nodePtr) const {
 // Should be called after recursion while traversing back up tree
 template <typename ItemType>
 void AvlTree<ItemType>::updateHeight(AvlNode<ItemType>* nodePtr) {
-    if (nodePtr->isLeaf){
+    if (nodePtr->isLeaf()){
         nodePtr->setHeight(1);
     } else {
         nodePtr->setHeight(1+max(nodePtr->getLeftChildPtr()->getHeight(),
@@ -40,7 +40,24 @@ int AvlTree<ItemType>::getBalanceFactor(AvlNode<ItemType>* nodePtr) const {
 }
 
 template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::balance(AvlNode<ItemType>* nodePtr) {}
+AvlNode<ItemType>* AvlTree<ItemType>::balance(AvlNode<ItemType>* nodePtr) {
+    int BF = nodePtr->getBalanceFactor();
+    if (BF < -1) { // Left heavy
+        if (nodePtr->getLeftChildPtr()->getBalanceFactor() > 0) { // Left Right
+            return rotateLeftRight(nodePtr);
+        } else { // Left Right
+            return rotateRight(nodePtr);
+        }
+    } else if (BF > 1) { // Right heavy
+        if (nodePtr->getRightChildPtr()->getBalanceFactor() <0) { // Right Left
+            return rotateRightLeft(nodePtr);
+        } else { // Right Right
+            return rotateLeft(nodePtr);
+        }
+    } else {
+        return nodePtr;
+    }
+}
 
 // Rotations
 
