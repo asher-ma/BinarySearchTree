@@ -7,7 +7,6 @@
 template <typename ItemType>
 class AvlTree : public BinarySearchTree<ItemType> {
     private:
-        int getHeight(AvlNode<ItemType>* nodePtr) const ;
         void updateHeight(AvlNode<ItemType>* nodePtr);
         int getBalanceFactor(AvlNode<ItemType>* nodePtr) const ;
         

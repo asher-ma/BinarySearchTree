@@ -22,6 +22,10 @@ template <typename ItemType>
 void AvlTree<ItemType>::updateHeight(AvlNode<ItemType>* nodePtr) {
     if (nodePtr->isLeaf()){
         nodePtr->setHeight(1);
+    } else if (nodePtr->getLeftChildPtr() == nullptr) {
+        nodePtr->setHeight(1+nodePtr->getRightChildPtr()->getHeight());
+    } else if (nodePtr->getRightChildPtr() == nullptr) {
+        nodePtr->setHeight(1+nodePtr->getLeftChildPtr()->getHeight());
     } else {
         nodePtr->setHeight(1+max(nodePtr->getLeftChildPtr()->getHeight(),
             nodePtr->getRightChildPtr()->getHeight()));
