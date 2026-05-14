@@ -51,15 +51,15 @@ int AvlTree<ItemType>::getBalanceFactor(AvlNode<ItemType>* nodePtr) const {
 
 template <typename ItemType>
 AvlNode<ItemType>* AvlTree<ItemType>::balance(AvlNode<ItemType>* nodePtr) {
-    int BF = nodePtr->getBalanceFactor();
+    int BF = getBalanceFactor(nodePtr);
     if (BF < -1) { // Left heavy
-        if (nodePtr->getLeftChildPtr()->getBalanceFactor() > 0) { // Left Right
+        if (getBalanceFactor(nodePtr->getLeftChildPtr()) > 0) { // Left Right
             return rotateLeftRight(nodePtr);
         } else { // Left Right
             return rotateRight(nodePtr);
         }
     } else if (BF > 1) { // Right heavy
-        if (nodePtr->getRightChildPtr()->getBalanceFactor() < 0) { // Right Left
+        if (getBalanceFactor(nodePtr->getRightChildPtr()) < 0) { // Right Left
             return rotateRightLeft(nodePtr);
         } else { // Right Right
             return rotateLeft(nodePtr);
@@ -165,13 +165,13 @@ AvlNode<ItemType>* AvlTree<ItemType>::removeValue(AvlNode<ItemType>* subTreePtr,
 template <typename ItemType>
 bool AvlTree<ItemType>::add(const ItemType& newEntry) {
     AvlNode<ItemType>* newNodePtr = new AvlNode<ItemType>(newEntry);
-    this->rootPtr = insertInorder(this->rootPtr, newNodePtr);
+    this->rootPtr = static_cast<AvlNode<ItemType>*>(insertInorder(this->rootPtr, newNodePtr));
     return true;
 }
 
 template <typename ItemType>
 bool AvlTree<ItemType>::remove( const ItemType& anEntry) {
     bool success = false;
-    this->rootPtr = removeValue(this->rootPtr, anEntry, success);
+    this->rootPtr = static_cast<AvlNode<ItemType>*>(removeValue(this->rootPtr, anEntry, success));
     return success;
 }
