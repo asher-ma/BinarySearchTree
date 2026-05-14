@@ -30,4 +30,6 @@ class AvlTree : public BinarySearchTree<ItemType> {
         bool remove( const ItemType& anEntry);
 };
 
+#include "../src/AvlTree.cpp"
+
 #endif
