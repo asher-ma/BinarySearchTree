@@ -17,6 +17,9 @@ class AvlTree : public BinarySearchTree<ItemType> {
         AvlNode<ItemType>* rotateLeftRight(AvlNode<ItemType>* nodePtr);
         AvlNode<ItemType>* rotateRightLeft(AvlNode<ItemType>* nodePtr);
 
+        void addHelper(AvlNode<ItemType>* nodePtr);
+        void removeHelper(AvlNode<ItemType>* nodePtr);
+
     public:
         AvlTree() : BinarySearchTree<ItemType>() {}
         AvlTree(const ItemType& rootItem) : BinarySearchTree<ItemType>(rootItem) {}
