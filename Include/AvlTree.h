@@ -17,16 +17,16 @@ class AvlTree : public BinarySearchTree<ItemType> {
         AvlNode<ItemType>* rotateLeftRight(AvlNode<ItemType>* nodePtr);
         AvlNode<ItemType>* rotateRightLeft(AvlNode<ItemType>* nodePtr);
 
-        void addHelper(AvlNode<ItemType>* nodePtr);
-        void removeHelper(AvlNode<ItemType>* nodePtr);
+        // Overriding to include rebalance
+        BinaryNode<ItemType>* insertInorder(BinaryNode<ItemType>* subTreePtr, BinaryNode<ItemType>* newNode);
+        BinaryNode<ItemType>* removeValue(BinaryNode<ItemType>* subTreePtr, const ItemType target, bool& success);
 
     public:
         AvlTree() : BinarySearchTree<ItemType>() {}
         AvlTree(const ItemType& rootItem) : BinarySearchTree<ItemType>(rootItem) {}
         AvlTree(const AvlTree<ItemType>& tree) : BinarySearchTree<ItemType>(tree) {}
 
-        bool add(const ItemType& newEntry); // Need to override to rebalance
-        bool remove(const ItemType& anEntry); 
+        bool add(const ItemType& newEntry);
 };
 
 #endif

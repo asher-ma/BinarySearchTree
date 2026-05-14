@@ -74,14 +74,19 @@ template <typename ItemType>
 AvlNode<ItemType>* AvlTree<ItemType>::rotateRightLeft(AvlNode<ItemType>* nodePtr) {}
 
 
-// Public Methods
+// Overridden methods
 
 template <typename ItemType>
-bool AvlTree<ItemType>::add(const ItemType& newEntry) {
-    return false;
+BinaryNode<ItemType>* AvlTree<ItemType>::removeValue(BinaryNode<ItemType>* subTreePtr, const ItemType target, bool& success) {
+
 }
 
 template <typename ItemType>
-bool AvlTree<ItemType>::remove(const ItemType& anEntry) {
+BinaryNode<ItemType>* AvlTree<ItemType>::insertInorder(BinaryNode<ItemType>* subTreePtr, BinaryNode<ItemType>* newNode) {
+
+}
+
+template <typename ItemType>
+bool AvlTree<ItemType>::add(const ItemType& newEntry) {
     return false;
 }
