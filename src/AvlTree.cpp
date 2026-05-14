@@ -40,7 +40,7 @@ int AvlTree<ItemType>::getBalanceFactor(AvlNode<ItemType>* nodePtr) const {
 }
 
 template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::rebalance(AvlNode<ItemType>* nodePtr) {}
+AvlNode<ItemType>* AvlTree<ItemType>::balance(AvlNode<ItemType>* nodePtr) {}
 
 // Rotations
 

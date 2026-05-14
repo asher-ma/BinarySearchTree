@@ -11,7 +11,7 @@ class AvlTree : public BinarySearchTree<ItemType> {
         void updateHeight(AvlNode<ItemType>* nodePtr);
         int getBalanceFactor(AvlNode<ItemType>* nodePtr) const ;
         
-        AvlNode<ItemType>* rebalance(AvlNode<ItemType>* nodePtr);
+        AvlNode<ItemType>* balance(AvlNode<ItemType>* nodePtr);
         AvlNode<ItemType>* rotateLeft(AvlNode<ItemType>* nodePtr);
         AvlNode<ItemType>* rotateRight(AvlNode<ItemType>* nodePtr);
         AvlNode<ItemType>* rotateLeftRight(AvlNode<ItemType>* nodePtr);
