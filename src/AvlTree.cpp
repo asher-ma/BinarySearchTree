@@ -119,13 +119,15 @@ AvlNode<ItemType>* AvlTree<ItemType>::insertInorder(AvlNode<ItemType>* subTreePt
 
     AvlNode<ItemType>* tempPtr;
     if (subTreePtr->getItem() > newNode->getItem()) {
-        tempPtr = insertInorder(subTreePtr->getLeftChildPtr(), newNode);
+        tempPtr = insertInorder(static_cast<AvlNode<ItemType>*>(subTreePtr->getLeftChildPtr()), newNode);
         subTreePtr->setLeftChildPtr(tempPtr);
-        subTreePtr = balance(subTreePtr); // Balance node after recursion
+        updateHeight(subTreePtr);
+        subTreePtr = balance(subTreePtr);
     } else {
-        tempPtr = insertInorder(subTreePtr->getRightChildPtr(), newNode);
+        tempPtr = insertInorder(static_cast<AvlNode<ItemType>*>(subTreePtr->getRightChildPtr()), newNode);
         subTreePtr->setRightChildPtr(tempPtr);
-        subTreePtr = balance(subTreePtr); // Balance node after recursion
+        updateHeight(subTreePtr);
+        subTreePtr = balance(subTreePtr);
     }
     return subTreePtr;
 }
@@ -136,7 +138,7 @@ AvlNode<ItemType>* AvlTree<ItemType>::removeValue(AvlNode<ItemType>* subTreePtr,
         success = false;
         return nullptr;
     } else if (subTreePtr->getItem() == target) { // reached target
-        subTreePtr = static_cast<AvlNode<ItemType>*>(removeNode(subTreePtr)); // Remove the node
+        subTreePtr = static_cast<AvlNode<ItemType>*>(this->removeNode(subTreePtr)); // Remove the node
         if (subTreePtr != nullptr) {
             subTreePtr = balance(subTreePtr); // Balance node if not a leaf
         }
@@ -163,13 +165,13 @@ AvlNode<ItemType>* AvlTree<ItemType>::removeValue(AvlNode<ItemType>* subTreePtr,
 template <typename ItemType>
 bool AvlTree<ItemType>::add(const ItemType& newEntry) {
     AvlNode<ItemType>* newNodePtr = new AvlNode<ItemType>(newEntry);
-    this->rootPtr = static_cast<AvlNode<ItemType>*>(insertInorder(this->rootPtr, newNodePtr));
+    this->rootPtr = insertInorder(static_cast<AvlNode<ItemType>*>(this->rootPtr), newNodePtr);
     return true;
 }
 
 template <typename ItemType>
 bool AvlTree<ItemType>::remove( const ItemType& anEntry) {
     bool success = false;
-    this->rootPtr = static_cast<AvlNode<ItemType>*>(removeValue(this->rootPtr, anEntry, success));
+    this->rootPtr = removeValue(static_cast<AvlNode<ItemType>*>(this->rootPtr), anEntry, success);
     return success;
 }
