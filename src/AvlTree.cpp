@@ -19,14 +19,6 @@ AvlTree<ItemType>::AvlTree(const AvlTree<ItemType>& tree) : BinarySearchTree<Ite
 // Private methods
 
 template <typename ItemType>
-int AvlTree<ItemType>::getHeight(AvlNode<ItemType>* nodePtr) const {
-    if (nodePtr == nullptr) {
-        return 0;
-    }
-    return nodePtr->getHeight();
-}
-
-template <typename ItemType>
 void AvlTree<ItemType>::updateHeight(AvlNode<ItemType>* nodePtr) {
     if (nodePtr->isLeaf()){
         nodePtr->setHeight(1);
@@ -118,12 +110,31 @@ AvlNode<ItemType>* AvlTree<ItemType>::rotateRightLeft(AvlNode<ItemType>* nodePtr
 // Overridden methods
 
 template <typename ItemType>
+AvlNode<ItemType>* AvlTree<ItemType>::insertInorder(AvlNode<ItemType>* subTreePtr, AvlNode<ItemType>* newNode) {
+    if (subTreePtr == nullptr) {
+        return newNode;
+    }
+
+    AvlNode<ItemType>* tempPtr;
+    if (subTreePtr->getItem() > newNode->getItem()) {
+        tempPtr = insertInorder(subTreePtr->getLeftChildPtr(), newNode);
+        subTreePtr->setLeftChildPtr(tempPtr);
+        subTreePtr = balance(subTreePtr); // Balance node after recursion
+    } else {
+        tempPtr = insertInorder(subTreePtr->getRightChildPtr(), newNode);
+        subTreePtr->setRightChildPtr(tempPtr);
+        subTreePtr = balance(subTreePtr); // Balance node after recursion
+    }
+    return subTreePtr;
+}
+
+template <typename ItemType>
 AvlNode<ItemType>* AvlTree<ItemType>::removeValue(AvlNode<ItemType>* subTreePtr, const ItemType target, bool& success) {
     if (subTreePtr == nullptr) { // reached leaf
         success = false;
         return nullptr;
     } else if (subTreePtr->getItem() == target) { // reached target
-        subTreePtr = removeNode(subTreePtr); // Remove the node
+        subTreePtr = static_cast<AvlNode<ItemType>*>(removeNode(subTreePtr)); // Remove the node
         if (subTreePtr != nullptr) {
             subTreePtr = balance(subTreePtr); // Balance node if not a leaf
         }
@@ -145,25 +156,6 @@ AvlNode<ItemType>* AvlTree<ItemType>::removeValue(AvlNode<ItemType>* subTreePtr,
         subTreePtr = balance(subTreePtr); // Balance node after recursion
         return subTreePtr;
     }
-}
-
-template <typename ItemType>
-AvlNode<ItemType>* AvlTree<ItemType>::insertInorder(AvlNode<ItemType>* subTreePtr, AvlNode<ItemType>* newNode) {
-    if (subTreePtr == nullptr) {
-        return newNode;
-    }
-
-    AvlNode<ItemType>* tempPtr;
-    if (subTreePtr->getItem() > newNode->getItem()) {
-        tempPtr = insertInorder(subTreePtr->getLeftChildPtr(), newNode);
-        subTreePtr->setLeftChildPtr(tempPtr);
-        subTreePtr = balance(subTreePtr); // Balance node after recursion
-    } else {
-        tempPtr = insertInorder(subTreePtr->getRightChildPtr(), newNode);
-        subTreePtr->setRightChildPtr(tempPtr);
-        subTreePtr = balance(subTreePtr); // Balance node after recursion
-    }
-    return subTreePtr;
 }
 
 template <typename ItemType>
