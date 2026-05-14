@@ -23,7 +23,6 @@ int AvlTree<ItemType>::getHeight(AvlNode<ItemType>* nodePtr) const {
     return nodePtr->getHeight();
 }
 
-// Should be called after recursion while traversing back up tree
 template <typename ItemType>
 void AvlTree<ItemType>::updateHeight(AvlNode<ItemType>* nodePtr) {
     if (nodePtr->isLeaf()){
@@ -69,8 +68,8 @@ AvlNode<ItemType>* AvlTree<ItemType>::rotateLeft(AvlNode<ItemType>* nodePtr) {
     nodePtr->setRightChildPtr(rightChild->getLeftChildPtr());
     rightChild->setLeftChildPtr(nodePtr);
     
-    nodePtr->updateHeight();
-    rightChild->updateHeight();
+    updateHeight(nodePtr);
+    updateHeight(rightChild);
 
     return rightChild;
 }
@@ -82,21 +81,21 @@ AvlNode<ItemType>* AvlTree<ItemType>::rotateRight(AvlNode<ItemType>* nodePtr) {
     nodePtr->setLeftChildPtr(leftChild->getRightChildPtr());
     leftChild->setRightChildPtr(nodePtr);
     
-    nodePtr->updateHeight();
-    leftChild->updateHeight();
+    updateHeight(nodePtr);
+    updateHeight(leftChild);
 
     return leftChild;
 }
 
 template <typename ItemType>
 AvlNode<ItemType>* AvlTree<ItemType>::rotateLeftRight(AvlNode<ItemType>* nodePtr) {
-    nodePtr->setLeftChildPtr() = rotateLeft(nodePtr->getLeftChildPtr());
+    nodePtr->setLeftChildPtr(rotateLeft(nodePtr->getLeftChildPtr()));
     return rotateRight(nodePtr);
 }
 
 template <typename ItemType>
 AvlNode<ItemType>* AvlTree<ItemType>::rotateRightLeft(AvlNode<ItemType>* nodePtr) {
-    nodePtr->setRightChildPtr() = rotateRight(nodePtr->getRightChildPtr());
+    nodePtr->setRightChildPtr(rotateRight(nodePtr->getRightChildPtr()));
     return rotateLeft(nodePtr);
 }
 
